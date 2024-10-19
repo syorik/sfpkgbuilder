@@ -1,0 +1,28 @@
+package cmd
+
+const (
+	ApexClassMdt                   = "ApexClass"
+	ApexTriggerMdt                 = "ApexTrigger"
+	CustomObjectMdt                = "CustomObject"
+	CustomObjectTranslationMdt     = "CustomObjectTranslation"
+	CustomPermissionMdt            = "CustomPermission"
+	CustomTabMdt                   = "CustomTab"
+	ExperienceBundleMdt            = "ExperienceBundle"
+	FlexiPageMdt                   = "FlexiPage"
+	FlowMdt                        = "Flow"
+	GlobalPicklistMdt              = "GlobalPicklist"
+	GlobalPicklistValueMdt         = "GlobalPicklistValue"
+	GlobalValueSetMdt              = "GlobalValueSet"
+	GlobalValueSetTranslationMdt   = "GlobalValueSetTranslation"
+	LightningComponentBundleMdt    = "LightningComponentBundle"
+	LightningMessageChannelMdt     = "LightningMessageChannel"
+	MilestoneTypeMdt               = "MilestoneType"
+	PermissionSetMdt               = "PermissionSet"
+	PermissionSetGroupMdt          = "PermissionSetGroup"
+	PlatformEventChannelMdt        = "PlatformEventChannel"
+	ProfileMdt                     = "Profile"
+	QueueMdt                       = "Queue"
+	StandardValueSetMdt            = "StandardValueSet"
+	StandardValueSetTranslationMdt = "StandardValueSetTranslation"
+	StaticResourceMdt              = "StaticResource"
+)
