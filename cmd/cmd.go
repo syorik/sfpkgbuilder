@@ -120,16 +120,7 @@ func handleDiffPackage(args DiffPackageArgs) {
 		return
 	}
 
-	fmt.Println("Changed files by directory:")
-	for dir, files := range changedFiles {
-		fmt.Printf("%s:\n", dir)
-		for _, file := range files {
-			fmt.Printf("  %s\n", file)
-		}
-	}
-
 	packageDefinition := pkg.NewPackage(pkg.WithVersion(args.APIVersion))
-
 	for dir, files := range changedFiles {
 		metadataType := pkg.MapDirectoryToMetadataType(dir)
 		if metadataType == "" {
