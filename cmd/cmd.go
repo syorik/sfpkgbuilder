@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/syorik/sfpkgbuilder/pkg"
 )
@@ -126,6 +127,41 @@ func handleDiffPackage(args DiffPackageArgs) {
 			fmt.Printf("  %s\n", file)
 		}
 	}
+
+	packageDefinition := pkg.NewPackage(pkg.WithVersion(args.APIVersion))
+
+	for dir, files := range changedFiles {
+		metadataType := pkg.MapDirectoryToMetadataType(dir)
+		if metadataType == "" {
+			fmt.Printf("Warning: Unknown metadata type for directory '%s'. Skipping.\n", dir)
+			continue
+		}
+
+		if metadataType == pkg.ApexClassMdt {
+			for _, file := range files {
+				parts := strings.Split(file, "/")
+				fileName := parts[len(parts)-1]
+				memberName := strings.Split(fileName, ".")[0]
+				packageDefinition.AddMember(metadataType, memberName)
+			}
+		}
+	}
+
+	xmlStr, err := packageDefinition.ToXMLString()
+	if err != nil {
+		fmt.Printf("Error generating package XML: %v\n", err)
+		return
+	}
+
+	fmt.Println("Generated package XML:")
+	fmt.Println(xmlStr)
+
+	err = os.WriteFile("package.xml", []byte(xmlStr), 0644)
+	if err != nil {
+		fmt.Printf("Error saving package XML to file: %v\n", err)
+		return
+	}
+	fmt.Println("Package XML saved to package.xml")
 }
 
 func printHelp() {
