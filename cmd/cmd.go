@@ -112,6 +112,20 @@ func handleDiffPackage(args DiffPackageArgs) {
 	fmt.Printf("Source Branch: %s\n", args.SourceBranch)
 	fmt.Printf("Target Branch: %s\n", args.TargetBranch)
 	fmt.Printf("Repository Path: %s\n", args.RepoPath)
+
+	changedFiles, err := pkg.GetChangedFilesByDirectory(args.SourceBranch, args.TargetBranch, args.RepoPath)
+	if err != nil {
+		fmt.Printf("Error getting changed files: %v\n", err)
+		return
+	}
+
+	fmt.Println("Changed files by directory:")
+	for dir, files := range changedFiles {
+		fmt.Printf("%s:\n", dir)
+		for _, file := range files {
+			fmt.Printf("  %s\n", file)
+		}
+	}
 }
 
 func printHelp() {
