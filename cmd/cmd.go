@@ -75,7 +75,6 @@ func handleFullPackage(args FullPackageArgs) {
 	packageDefinition.AddMember(pkg.FlexiPageMdt, "*")
 	packageDefinition.AddMember(pkg.FlowMdt, "*")
 	packageDefinition.AddMember(pkg.GlobalPicklistMdt, "*")
-	packageDefinition.AddMember(pkg.GlobalPicklistValueMdt, "*")
 	packageDefinition.AddMember(pkg.GlobalValueSetMdt, "*")
 	packageDefinition.AddMember(pkg.GlobalValueSetTranslationMdt, "*")
 	packageDefinition.AddMember(pkg.LightningComponentBundleMdt, "*")

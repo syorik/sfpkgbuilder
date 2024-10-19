@@ -11,7 +11,6 @@ const (
 	FlexiPageMdt                   = "FlexiPage"
 	FlowMdt                        = "Flow"
 	GlobalPicklistMdt              = "GlobalPicklist"
-	GlobalPicklistValueMdt         = "GlobalPicklistValue"
 	GlobalValueSetMdt              = "GlobalValueSet"
 	GlobalValueSetTranslationMdt   = "GlobalValueSetTranslation"
 	LightningComponentBundleMdt    = "LightningComponentBundle"
