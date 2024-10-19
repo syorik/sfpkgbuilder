@@ -128,7 +128,13 @@ func handleDiffPackage(args DiffPackageArgs) {
 			continue
 		}
 
-		if metadataType == pkg.ApexClassMdt {
+		if metadataType == pkg.ApexClassMdt ||
+			metadataType == pkg.ProfileMdt ||
+			metadataType == pkg.PermissionSetMdt ||
+			metadataType == pkg.GlobalValueSetMdt ||
+			metadataType == pkg.StandardValueSetMdt ||
+			metadataType == pkg.FlowMdt ||
+			metadataType == pkg.CustomPermissionMdt {
 			for _, file := range files {
 				parts := strings.Split(file, "/")
 				fileName := parts[len(parts)-1]
