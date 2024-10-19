@@ -19,13 +19,47 @@ type Type struct {
 	Name    string   `xml:"name"`
 }
 
+type PackageOption func(*Package)
+
+func NewPackage(options ...PackageOption) *Package {
+	p := &Package{
+		Xmlns: "http://soap.sforce.com/2006/04/metadata",
+	}
+	for _, option := range options {
+		option(p)
+	}
+	return p
+}
+
+func WithVersion(version string) PackageOption {
+	return func(p *Package) {
+		p.Version = version
+	}
+}
+
+func (p *Package) AddType(name string, members ...string) {
+	p.Types = append(p.Types, Type{
+		Name:    name,
+		Members: members,
+	})
+}
+
+func (p *Package) AddMember(typeName string, member string) {
+	for i, t := range p.Types {
+		if t.Name == typeName {
+			p.Types[i].Members = append(p.Types[i].Members, member)
+			return
+		}
+	}
+	p.AddType(typeName, member)
+}
+
 func (p *Package) ToXMLString() (string, error) {
 	if p == nil {
 		return "", fmt.Errorf("package is nil")
 	}
 	xmlHeader := `<?xml version="1.0" encoding="UTF-8"?>`
 
-	// Validate UTF-8 encoding for all string fields
 	if !utf8.ValidString(p.Xmlns) || !utf8.ValidString(p.Version) {
 		return "", fmt.Errorf("invalid UTF-8 in Package fields")
 	}

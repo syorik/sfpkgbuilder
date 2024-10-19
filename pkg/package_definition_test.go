@@ -7,16 +7,8 @@ import (
 )
 
 func TestPackage_ToXMLString(t *testing.T) {
-	pkg := &Package{
-		Xmlns: "http://soap.sforce.com/2006/04/metadata",
-		Types: []Type{
-			{
-				Members: []string{"Account"},
-				Name:    "CustomObject",
-			},
-		},
-		Version: "58.0",
-	}
+	pkg := NewPackage(WithVersion("58.0"))
+	pkg.AddType("CustomObject", "Account")
 
 	xmlStr, err := pkg.ToXMLString()
 
@@ -51,14 +43,8 @@ func TestFromXMLString_Error(t *testing.T) {
 }
 
 func TestPackage_ToXMLString_Error(t *testing.T) {
-	pkg := &Package{
-		Xmlns: "http://soap.sforce.com/2006/04/metadata",
-		Types: []Type{{
-			Members: []string{"Invalid\xffMember"},
-			Name:    "CustomObject",
-		}},
-		Version: "58.0",
-	}
+	pkg := NewPackage(WithVersion("58.0"))
+	pkg.AddType("CustomObject", "Invalid\xffMember")
 
 	_, err := pkg.ToXMLString()
 
@@ -73,4 +59,17 @@ func TestPackage_ToXMLString_NilPackage(t *testing.T) {
 
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "package is nil")
+}
+
+func TestPackage_AddMember(t *testing.T) {
+	pkg := NewPackage()
+	pkg.AddMember("CustomObject", "Account")
+	pkg.AddMember("CustomObject", "Contact")
+	pkg.AddMember("ApexClass", "MyClass")
+
+	assert.Len(t, pkg.Types, 2)
+	assert.Equal(t, "CustomObject", pkg.Types[0].Name)
+	assert.Equal(t, []string{"Account", "Contact"}, pkg.Types[0].Members)
+	assert.Equal(t, "ApexClass", pkg.Types[1].Name)
+	assert.Equal(t, []string{"MyClass"}, pkg.Types[1].Members)
 }
