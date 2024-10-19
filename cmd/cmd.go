@@ -127,6 +127,7 @@ func handleDiffPackage(args DiffPackageArgs) {
 			fmt.Printf("  %s\n", file)
 		}
 	}
+	fmt.Println()
 
 	packageDefinition := pkg.NewPackage(pkg.WithVersion(args.APIVersion))
 	for dir, files := range changedFiles {
