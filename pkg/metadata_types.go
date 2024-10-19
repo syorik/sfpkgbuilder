@@ -3,6 +3,7 @@ package pkg
 const (
 	ApexClassMdt                   = "ApexClass"
 	ApexTriggerMdt                 = "ApexTrigger"
+	CustomFieldMdt                 = "CustomField"
 	CustomObjectMdt                = "CustomObject"
 	CustomObjectTranslationMdt     = "CustomObjectTranslation"
 	CustomPermissionMdt            = "CustomPermission"
@@ -34,6 +35,8 @@ func MapDirectoryToMetadataType(directory string) string {
 		return ApexTriggerMdt
 	case "objects":
 		return CustomObjectMdt
+	case "fields":
+		return CustomFieldMdt
 	case "objectTranslations":
 		return CustomObjectTranslationMdt
 	case "customPermissions":

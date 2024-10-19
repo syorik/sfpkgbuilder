@@ -150,6 +150,16 @@ func handleDiffPackage(args DiffPackageArgs) {
 				memberName := strings.Split(fileName, ".")[0]
 				packageDefinition.AddMember(metadataType, memberName)
 			}
+		} else if metadataType == pkg.CustomFieldMdt {
+			for _, file := range files {
+				parts := strings.Split(file, "/")
+				if len(parts) >= 4 {
+					objectName := parts[1]
+					fieldName := strings.Split(parts[3], ".")[0]
+					memberName := fmt.Sprintf("%s.%s", objectName, fieldName)
+					packageDefinition.AddMember(metadataType, memberName)
+				}
+			}
 		}
 	}
 
