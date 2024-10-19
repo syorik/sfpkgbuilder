@@ -16,6 +16,7 @@ const (
 	GlobalValueSetTranslationMdt   = "GlobalValueSetTranslation"
 	LightningComponentBundleMdt    = "LightningComponentBundle"
 	LightningMessageChannelMdt     = "LightningMessageChannel"
+	ListViewMdt                    = "ListView"
 	MilestoneTypeMdt               = "MilestoneType"
 	PermissionSetMdt               = "PermissionSet"
 	PermissionSetGroupMdt          = "PermissionSetGroup"
@@ -77,6 +78,8 @@ func MapDirectoryToMetadataType(directory string) string {
 		return StandardValueSetTranslationMdt
 	case "staticresources":
 		return StaticResourceMdt
+	case "listViews":
+		return ListViewMdt
 	}
 	return ""
 }

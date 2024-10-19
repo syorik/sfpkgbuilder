@@ -120,7 +120,7 @@ func handleDiffPackage(args DiffPackageArgs) {
 		return
 	}
 
-	fmt.Println("Changed files by directory:")
+	fmt.Println("\n\nChanged files by directory:")
 	for dir, files := range changedFiles {
 		fmt.Printf("%s:\n", dir)
 		for _, file := range files {
@@ -128,7 +128,6 @@ func handleDiffPackage(args DiffPackageArgs) {
 		}
 	}
 	fmt.Println()
-
 	packageDefinition := pkg.NewPackage(pkg.WithVersion(args.APIVersion))
 	for dir, files := range changedFiles {
 		metadataType := pkg.MapDirectoryToMetadataType(dir)
@@ -157,6 +156,32 @@ func handleDiffPackage(args DiffPackageArgs) {
 					objectName := parts[1]
 					fieldName := strings.Split(parts[3], ".")[0]
 					memberName := fmt.Sprintf("%s.%s", objectName, fieldName)
+					packageDefinition.AddMember(metadataType, memberName)
+				}
+			}
+		} else if metadataType == pkg.LightningComponentBundleMdt {
+			for _, file := range files {
+				parts := strings.Split(file, "/")
+				if len(parts) >= 2 {
+					memberName := parts[0]
+					packageDefinition.AddMember(metadataType, memberName)
+				}
+			}
+		} else if metadataType == pkg.CustomObjectMdt {
+			for _, file := range files {
+				parts := strings.Split(file, "/")
+				if len(parts) >= 1 {
+					memberName := parts[0]
+					packageDefinition.AddMember(metadataType, memberName)
+				}
+			}
+		} else if metadataType == pkg.ListViewMdt {
+			for _, file := range files {
+				parts := strings.Split(file, "/")
+				if len(parts) >= 4 {
+					objectName := parts[1]
+					listViewName := strings.Split(parts[3], ".")[0]
+					memberName := fmt.Sprintf("%s.%s", objectName, listViewName)
 					packageDefinition.AddMember(metadataType, memberName)
 				}
 			}

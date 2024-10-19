@@ -35,9 +35,14 @@ func GetChangedFilesByDirectory(sourceCommit, targetCommit, repoPath string) (ma
 		dir := parts[0]
 		filePath := strings.Join(parts[1:], "/")
 
-		if dir == "objects" && strings.Contains(filePath, "/fields/") {
-			dir = "fields"
-			filePath = relPath // Preserve the whole path for fields
+		if dir == "objects" {
+			if strings.Contains(filePath, "/fields/") {
+				dir = "fields"
+				filePath = relPath
+			} else if strings.Contains(filePath, "/listViews/") {
+				dir = "listViews"
+				filePath = relPath
+			}
 		}
 
 		result[dir] = append(result[dir], filePath)
