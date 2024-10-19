@@ -47,6 +47,11 @@ func (p *Package) AddType(name string, members ...string) {
 func (p *Package) AddMember(typeName string, member string) {
 	for i, t := range p.Types {
 		if t.Name == typeName {
+			for _, existingMember := range t.Members {
+				if existingMember == member {
+					return
+				}
+			}
 			p.Types[i].Members = append(p.Types[i].Members, member)
 			return
 		}
