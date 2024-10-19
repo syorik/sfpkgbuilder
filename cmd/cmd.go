@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/syorik/sfpkgbuilder/pkg"
 )
 
 type FullPackageArgs struct {
@@ -59,6 +61,50 @@ func main() {
 func handleFullPackage(args FullPackageArgs) {
 	fmt.Println("Handling full package generation")
 	fmt.Printf("API Version: %s\n", args.APIVersion)
+
+	packageDefinition := pkg.NewPackage(pkg.WithVersion(args.APIVersion))
+
+	// Add all metadata types with "*" as member
+	packageDefinition.AddMember(pkg.ApexClassMdt, "*")
+	packageDefinition.AddMember(pkg.ApexTriggerMdt, "*")
+	packageDefinition.AddMember(pkg.CustomObjectMdt, "*")
+	packageDefinition.AddMember(pkg.CustomObjectTranslationMdt, "*")
+	packageDefinition.AddMember(pkg.CustomPermissionMdt, "*")
+	packageDefinition.AddMember(pkg.CustomTabMdt, "*")
+	packageDefinition.AddMember(pkg.ExperienceBundleMdt, "*")
+	packageDefinition.AddMember(pkg.FlexiPageMdt, "*")
+	packageDefinition.AddMember(pkg.FlowMdt, "*")
+	packageDefinition.AddMember(pkg.GlobalPicklistMdt, "*")
+	packageDefinition.AddMember(pkg.GlobalPicklistValueMdt, "*")
+	packageDefinition.AddMember(pkg.GlobalValueSetMdt, "*")
+	packageDefinition.AddMember(pkg.GlobalValueSetTranslationMdt, "*")
+	packageDefinition.AddMember(pkg.LightningComponentBundleMdt, "*")
+	packageDefinition.AddMember(pkg.LightningMessageChannelMdt, "*")
+	packageDefinition.AddMember(pkg.MilestoneTypeMdt, "*")
+	packageDefinition.AddMember(pkg.PermissionSetMdt, "*")
+	packageDefinition.AddMember(pkg.PermissionSetGroupMdt, "*")
+	packageDefinition.AddMember(pkg.PlatformEventChannelMdt, "*")
+	packageDefinition.AddMember(pkg.ProfileMdt, "*")
+	packageDefinition.AddMember(pkg.QueueMdt, "*")
+	packageDefinition.AddMember(pkg.StandardValueSetMdt, "*")
+	packageDefinition.AddMember(pkg.StandardValueSetTranslationMdt, "*")
+	packageDefinition.AddMember(pkg.StaticResourceMdt, "*")
+
+	xmlStr, err := packageDefinition.ToXMLString()
+	if err != nil {
+		fmt.Printf("Error generating package XML: %v\n", err)
+		return
+	}
+
+	fmt.Println("Generated package XML:")
+	fmt.Println(xmlStr)
+
+	err = os.WriteFile("package.xml", []byte(xmlStr), 0644)
+	if err != nil {
+		fmt.Printf("Error saving package XML to file: %v\n", err)
+		return
+	}
+	fmt.Println("Package XML saved to package.xml")
 }
 
 func handleDiffPackage(args DiffPackageArgs) {
