@@ -5,6 +5,7 @@ const (
 	ApexTriggerMdt                 = "ApexTrigger"
 	CustomFieldMdt                 = "CustomField"
 	CustomObjectMdt                = "CustomObject"
+	CustomLabelMdt                 = "CustomLabel"
 	CustomObjectTranslationMdt     = "CustomObjectTranslation"
 	CustomPermissionMdt            = "CustomPermission"
 	CustomTabMdt                   = "CustomTab"
@@ -36,6 +37,8 @@ func MapDirectoryToMetadataType(directory string) string {
 		return ApexTriggerMdt
 	case "objects":
 		return CustomObjectMdt
+	case "labels":
+		return CustomLabelMdt
 	case "fields":
 		return CustomFieldMdt
 	case "objectTranslations":

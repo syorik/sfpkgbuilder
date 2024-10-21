@@ -69,6 +69,7 @@ func handleFullPackage(args FullPackageArgs) {
 	packageDefinition.AddMember(pkg.ApexClassMdt, "*")
 	packageDefinition.AddMember(pkg.ApexTriggerMdt, "*")
 	packageDefinition.AddMember(pkg.CustomObjectMdt, "*")
+	packageDefinition.AddMember(pkg.CustomLabelMdt, "*")
 	packageDefinition.AddMember(pkg.CustomObjectTranslationMdt, "*")
 	packageDefinition.AddMember(pkg.CustomPermissionMdt, "*")
 	packageDefinition.AddMember(pkg.CustomTabMdt, "*")
